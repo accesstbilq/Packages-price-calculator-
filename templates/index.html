@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Price Prediction</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 100%;
+            max-width: 500px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+        }
+        input:focus {
+            outline: none;
+            border-color: #4a90e2;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #40a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #357abd;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e9f5ff;
+            border-radius: 5px;
+            text-align: center;
+            border: 1px solid #4a90e2;
+        }
+        .result h2 {
+            color: #333;
+            margin: 0;
+        }
+        .model-info {
+            text-align: center;
+            margin-top: 10px;
+            color: #666;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Price Predictor(Mutli-Address)</h1>
+        <form method="POST">
+            <div class="form-group">
+                <label for="number_of_rooms">Number of Rooms:</label>
+                <input type="number" step="0.1" name="number_of_rooms" 
+                       value="{{ request.form['number_of_rooms'] }}" required>
+            </div>
+            <div class="form-group">
+                <label for="difficulty_level">Difficulty Level:</label>
+                <input type="number" step="0.1" name="difficulty_level" 
+                       value="{{ request.form['difficulty_level'] }}" required>
+            </div>
+            <div class="form-group">
+                <label for="pickup_address_count">Pickup Address Count:</label>
+                <input type="number" name="pickup_address_count" 
+                       value="{{ request.form['pickup_address_count'] }}" required>
+            </div>
+            <div class="form-group">
+                <label for="dropoff_address_count">Dropoff Address Count:</label>
+                <input type="number" name="dropoff_address_count" 
+                       value="{{ request.form['dropoff_address_count'] }}" required>
+            </div>
+            <div class="form-group">
+                <label for="total_distance_km">Total Distance (km):</label>
+                <input type="number" step="0.1" name="total_distance_km" 
+                       value="{{ request.form['total_distance_km'] }}" required>
+            </div>
+            <button type="submit">Predict Price</button>
+        </form>
+
+        {% if predicted_price is not none %}
+        <div class="result">
+            <h2>Predicted Price: ${{ predicted_price }}</h2>
+        </div>
+        {% endif %}
+        <div class="model-info">
+            Model Accuracy: 84%
+        </div>
+    </div>
+</body>
+</html>
